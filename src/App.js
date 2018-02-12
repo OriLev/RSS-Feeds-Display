@@ -29,9 +29,8 @@ class App extends Component {
     })
   }
   
-  componentDidMount() {
+  componentDidUpdate() {
     const stateString = JSON.stringify(this.state);
-    alert(stateString);
     window.localStorage.setItem('appState', stateString);
   }
   render() {
