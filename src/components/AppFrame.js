@@ -1,10 +1,40 @@
-import React from 'react';
+import React, { Component, } from 'react';
 import { Route, NavLink, Switch} from 'react-router-dom'
 import './AppFrame.css';
 
 
-function RSSInputForm() {
-  return null;
+class RSSInputForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newFeed: '',
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  handleChange(e) {
+    this.setState({ newFeed: e.target.value, })
+  }
+
+  handleSubmit(e) {
+    const { newFeed, } = this.state;
+    const { addFeed, } = this.props;
+    addFeed(newFeed);
+    this.setState({ newFeed: '', })
+    e.preventDefault();
+  }
+
+  render() {
+    const { handleSubmit, handleChange, } = this;
+    const { newFeed, } = this.state;
+    return (
+      <form onSubmit={ handleSubmit }>
+        <input type="url" value={ newFeed } onChange={ handleChange } />
+        <input type="submit" value="add" />
+      </form>
+    );
+  }
 }
 
 function RSSFeedsList({ feedsList, removeFeed, }) {
@@ -26,11 +56,11 @@ function RSSFeed() {
   return null;
 }
 
-function SideBar({ feedsList, removeFeed, }) {
+function SideBar({ feedsList, addFeed, removeFeed, }) {
   return (
     <div className="sidebar">
       <div className="sidebar__RSSInputContainer">
-         <RSSInputForm />
+         <RSSInputForm addFeed={ addFeed }/>
       </div>
       <div className="sidebar__RSSListContainer">
         <RSSFeedsList feedsList={ feedsList } removeFeed={ removeFeed }/>
@@ -64,9 +94,9 @@ function IllegalRoute({ match }) {
 
 
 
-export function AppFrame({ feedsList, removeFeed, }) {
+export function AppFrame({ feedsList, addFeed, removeFeed, }) {
   console.log(feedsList)
-  const sidebarProps = { feedsList, removeFeed, }
+  const sidebarProps = { feedsList, addFeed, removeFeed, }
   return (
     <div className="appWrapper">
       <SideBar { ...sidebarProps } />

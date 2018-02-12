@@ -20,6 +20,14 @@ class App extends Component {
     }
 
     this.removeFeed = this.removeFeed.bind(this);
+    this.addFeed = this.addFeed.bind(this);
+  }
+  
+  addFeed(feedUrl) {
+    this.setState((prevState) => {
+      const { feedsList, } = prevState;
+      return { feedsList: [ feedUrl, ...feedsList] }
+    })
   }
 
   removeFeed(feedIndex) {
@@ -35,8 +43,8 @@ class App extends Component {
   }
   render() {
     const { feedsList, } = this.state;
-    const { removeFeed, } = this;
-    const appFrameProps = { feedsList, removeFeed, }
+    const { addFeed, removeFeed, } = this;
+    const appFrameProps = { feedsList, addFeed, removeFeed, }
     return (
       <BrowserRouter>
         <Route
