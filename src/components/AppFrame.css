@@ -1,0 +1,42 @@
+.appWrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__RSSInputContainer{
+  height: 15%;
+}
+
+.sidebar__RSSListContainer {
+  height: 85%;
+}
+
+.main {
+  flex-basis: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main__headerContainer {
+  height: 20%;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items:  center; 
+}
+
+.main__feedContainer {
+  height: 80%;
+}
+
+.activeLink {
+  color: red;
+}
