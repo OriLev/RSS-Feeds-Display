@@ -1,5 +1,5 @@
 import React, { Component, } from 'react';
-import { Route, NavLink, Switch} from 'react-router-dom'
+import { Route, NavLink, Switch, withRouter, } from 'react-router-dom'
 import './AppFrame.css';
 
 
@@ -19,9 +19,10 @@ class RSSInputForm extends Component {
 
   handleSubmit(e) {
     const { newFeed, } = this.state;
-    const { addFeed, } = this.props;
-    addFeed(newFeed);
-    this.setState({ newFeed: '', })
+    const { addFeed, history, } = this.props;
+    addFeed(newFeed.slice(7));
+    history.push(`/${newFeed.slice(7)}`);
+    this.setState({ newFeed: '', });
     e.preventDefault();
   }
 
@@ -57,10 +58,11 @@ function RSSFeed() {
 }
 
 function SideBar({ feedsList, addFeed, removeFeed, }) {
+  const RSSInputFormWithHistory = withRouter(RSSInputForm);
   return (
     <div className="sidebar">
       <div className="sidebar__RSSInputContainer">
-         <RSSInputForm addFeed={ addFeed }/>
+         <RSSInputFormWithHistory addFeed={ addFeed }/>
       </div>
       <div className="sidebar__RSSListContainer">
         <RSSFeedsList feedsList={ feedsList } removeFeed={ removeFeed }/>
