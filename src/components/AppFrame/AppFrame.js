@@ -1,5 +1,6 @@
 import React, { Component, } from 'react';
 import { Route, NavLink, Switch, withRouter, } from 'react-router-dom'
+import { Loading, } from '../Loading/Loading';
 import './AppFrame.css';
 
 
@@ -75,7 +76,7 @@ class RSSFeed extends Component {
     const { activeFeed, } = this.props;
     const jsonFeedAPI = 'https://api.rss2json.com/v1/api.json?rss_url=';
     fetch(jsonFeedAPI + activeFeed)
-    .then(res => {console.log(res); return res.json()})
+    .then(res => res.json())
     .then(res => checkStatus(res))
     .then(res => (
       this.setState({
@@ -98,20 +99,34 @@ class RSSFeed extends Component {
     if (error) {
       return <ErrorMessage message={ error } />
     }
+    console.log(items)
     return <ItemsList items={ items } />;
   }
 }
 
+
 function ItemsList({ items, }) {
-  const Items = () => (
+  const Items = (listItems) => (
     <React.Fragment>
-      
+      { 
+        listItems.map(item => {
+          const { guid, pubDate, title, content, } = item;
+          return (
+            <li key={ guid }>
+              <div>
+                <h3> { `${title} - ${pubDate}`} </h3>
+                <p  dangerouslySetInnerHTML={{__html: content }}/>
+              </div>
+            </li>    
+          )
+        })
+      }
     </React.Fragment>
   )
 
   return (
-    <ul>
-
+    <ul className="feedItemsList">
+      { Items(items) }
     </ul>
   )
 }

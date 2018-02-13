@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, } from 'react-router-dom';
 import './App.css';
-import { AppFrame, } from './components/AppFrame';
+import { AppFrame, } from './components/AppFrame/AppFrame';
 
 class App extends Component {
   static get defaultProps() {
