@@ -20,9 +20,8 @@ class RSSInputForm extends Component {
   handleSubmit(e) {
     const { newFeed, } = this.state;
     const { addFeed, history, } = this.props;
-    addFeed(newFeed.slice(7));
-    history.push(`/${newFeed.slice(7)}`);
-    this.setState({ newFeed: '', });
+    addFeed(newFeed);
+    history.push(`/${newFeed}`);
     e.preventDefault();
   }
 
@@ -53,8 +52,68 @@ function RSSFeedsList({ feedsList, removeFeed, }) {
   );
 }
 
-function RSSFeed() {
-  return null;
+class RSSFeed extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loading: true,
+      items: [],
+      error: '',
+    }
+  }
+
+  componentDidMount() {
+    function checkStatus(response) {
+      if (response.status === "ok") {
+        return response
+      } else {
+        var error = new Error(response.statusText)
+        error.response = response
+        throw error
+      }
+    }
+    const { activeFeed, } = this.props;
+    const jsonFeedAPI = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    fetch(jsonFeedAPI + activeFeed)
+    .then(res => {console.log(res); return res.json()})
+    .then(res => checkStatus(res))
+    .then(res => (
+      this.setState({
+        loading: false,
+        items: res.items,
+      })
+    ))
+    .catch(err => (
+      this.setState({
+        loading: false,
+        error: err.response.message,
+      })
+    ))
+  }
+  render() {
+    const { loading, items, error, } = this.state;
+    if (loading) {
+      return <Loading />
+    }
+    if (error) {
+      return <ErrorMessage message={ error } />
+    }
+    return <ItemsList items={ items } />;
+  }
+}
+
+function ItemsList({ items, }) {
+  const Items = () => (
+    <React.Fragment>
+      
+    </React.Fragment>
+  )
+
+  return (
+    <ul>
+
+    </ul>
+  )
 }
 
 function SideBar({ feedsList, addFeed, removeFeed, }) {
@@ -76,20 +135,19 @@ function MainScreen({ activeFeed }) {
   return (
     <React.Fragment>
       <div className="main__headerContainer">
-        <h1> {activeFeed} </h1>
+        <h1> { activeFeed } </h1>
       </div>
       <div className="main__feedContainer">
-        <RSSFeed/>
+        <RSSFeed activeFeed={ activeFeed }/>
       </div>
     </React.Fragment>
   );
 }
 
-function IllegalRoute({ match }) {
-  const { illegalRoute, } = match.params;
+function ErrorMessage({ message, }) {
   return (
-      <div className="main__headerContainer">
-        <h1> {illegalRoute} is not a valid route </h1>
+      <div className="main__errorMessageContainer">
+        <h1> {message} </h1>
       </div>
   );
 }
@@ -111,7 +169,9 @@ export function AppFrame({ feedsList, addFeed, removeFeed, }) {
               render={() => <MainScreen activeFeed={feed} /> } 
             />
           ))}
-          <Route path="/:illegalRoute" component={ IllegalRoute } />
+          <Route path="/:illegalRoute" render={() => (
+            <ErrorMessage message={ 'There is no feed associataed with this route' } />
+          )} />
         </Switch>
       </div>
     </div>
