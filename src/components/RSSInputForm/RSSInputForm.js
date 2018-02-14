@@ -30,8 +30,16 @@ export class RSSInputForm extends Component {
     const { newFeed, } = this.state;
     return (
       <form className="inputForm" onSubmit={ handleSubmit }>
-        <input className="inputForm__input" type="url" value={ newFeed } onChange={ handleChange } />
-        <button className="inputForm__submitButton" type="submit" >add</button>
+        <input 
+          className="inputForm__input" 
+          type="url" 
+          value={ newFeed } 
+          onChange={ handleChange } 
+          placeholder="What URL should I check?"
+        />
+        <button className="inputForm__submitButton" type="submit" >
+          <i className="fas fa-search fa-2x"></i>
+        </button>
       </form>
     );
   }

@@ -6,10 +6,11 @@ import './RSSFeed.css';
 
 function Item({ pubDate, title, content, }) {
   return (
-    <li>
+    <li className="feedItemsList__item">
       <div>
-        <h3> { `${title} - ${pubDate}`} </h3>
-        <p  dangerouslySetInnerHTML={{__html: content }}/>
+        <h5> <i> {pubDate} </i></h5>
+        <h3> { title } </h3>
+        <p  className="feedItemsList__item__content" dangerouslySetInnerHTML={{__html: content }}/>
       </div>
     </li>
   )
@@ -83,7 +84,6 @@ export class RSSFeed extends Component {
     if (error) {
       return <ErrorMessage message={ error } />
     }
-    console.log(items)
     return <ItemsList items={ items } />;
   }
 }

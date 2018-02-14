@@ -5,11 +5,13 @@ import './RSSFeedsList.css';
 
 function RSSFeedLink({ feedURL, removeFeed, }) {
   return (
-    <li>
-      <NavLink to={`/${feedURL}`} activeClassName="activeLink">
+    <li className="feedsList__container">
+      <NavLink to={`/${feedURL}`} className="link" activeClassName="link--active">
         {feedURL}
       </NavLink>
-      <input type="button" value="X" onClick={ removeFeed }/> 
+      <span className="removeLinkButton" onClick={ removeFeed }>
+        <i className="fas fa-times"></i>
+      </span> 
     </li>
   )
 }
@@ -21,7 +23,7 @@ RSSFeedLink.propTypes = {
 
 export function RSSFeedsList({ feedsList, removeFeed, }) {
   return (
-    <ul>
+    <ul className="feedsList">
       {feedsList.map((feedURL, index) => (
         <RSSFeedLink key={ feedURL } feedURL={ feedURL } removeFeed={ () => removeFeed(index) } />
       ))}

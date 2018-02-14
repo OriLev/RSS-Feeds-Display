@@ -7,6 +7,9 @@
 
 .loadingContainer {
   margin-top: 10%;
+  margin-left: 20%;
+  width: 100%;
+  padding: auto auto;
 }
 
 .loadingContainer>h1 {

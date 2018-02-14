@@ -7,10 +7,15 @@
 }
 
 .inputForm__input {
-  border:none;
   flex-grow: 5;
+  padding: 1%;
 }
 
 .inputForm__submitButton {
   flex-grow: 2;
+}
+
+.inputForm__submitButton:active {
+  flex-grow: 2;
+  color: red;
 }

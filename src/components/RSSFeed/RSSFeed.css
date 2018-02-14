@@ -1,3 +1,22 @@
 .feedItemsList {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   list-style: none;
+  align-items: center;
+}
+
+.feedItemsList__item {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 3%;
+  margin: 2rem auto;
+  border-radius: 3px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+  border: solid 1px black;
+}
+
+.feedItemsList__item__content {
+  margin-top: 1em;
 }
