@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+The reason I chose to use Create React App is the fact that it provides a lot of options (i.e testing, linting) right out of the box. If ever there will be a need to override the initial configuration, it's fairly simple to eject the project and change the configuration manually.
+
+Plus, it comes with a detailed description regarding project build, as well as other documentation regarding Create React App.
+
+The one thing missing is regarding installation. After cloning the project locally, run `npm install` in your terminal. Once all the dependencies are installed it will be possible to run in the terminal `npm start` and see the project on `localhost:3000` in your browser.
+
+In order to receive a production version of the project, run `npm run build`. Once the project is built, it will be possible to run in the terminal `serve -s build` and see the production version on `localhost:5000` in your browser.
+
+At the moment the project has several files and configurations that are not being used due to Create React App scope being so wide. None the less, if the project were to grow, those extra files will no doubt find their use!
+
+From this point on, the documentation is from Create React App: 
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
