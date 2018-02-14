@@ -1,135 +1,11 @@
-import React, { Component, } from 'react';
-import { Route, NavLink, Switch, withRouter, } from 'react-router-dom'
-import { Loading, } from '../Loading/Loading';
+import React from 'react';
+import { Route, Switch, withRouter, } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { RSSInputForm, } from '../RSSInputForm/RSSInputForm';
+import { RSSFeedsList, } from '../RSSFeedsList/RSSFeedsList';
+import { RSSFeed, } from '../RSSFeed/RSSFeed';
+import { ErrorMessage, } from '../ErrorMessage/ErrorMessage';
 import './AppFrame.css';
-
-
-class RSSInputForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newFeed: '',
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  
-  handleChange(e) {
-    this.setState({ newFeed: e.target.value, })
-  }
-
-  handleSubmit(e) {
-    const { newFeed, } = this.state;
-    const { addFeed, history, } = this.props;
-    addFeed(newFeed);
-    history.push(`/${newFeed}`);
-    e.preventDefault();
-  }
-
-  render() {
-    const { handleSubmit, handleChange, } = this;
-    const { newFeed, } = this.state;
-    return (
-      <form onSubmit={ handleSubmit }>
-        <input type="url" value={ newFeed } onChange={ handleChange } />
-        <input type="submit" value="add" />
-      </form>
-    );
-  }
-}
-
-function RSSFeedsList({ feedsList, removeFeed, }) {
-  return (
-    <ul>
-      {feedsList.map((feed, index) => (
-        <li key={feed} >
-          <NavLink to={`/${feed}`} activeClassName="activeLink">
-            {feed}
-          </NavLink>
-          <input type="button" value="X" onClick={() => removeFeed(index)}/> 
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-class RSSFeed extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      loading: true,
-      items: [],
-      error: '',
-    }
-  }
-
-  componentDidMount() {
-    function checkStatus(response) {
-      if (response.status === "ok") {
-        return response
-      } else {
-        var error = new Error(response.statusText)
-        error.response = response
-        throw error
-      }
-    }
-    const { activeFeed, } = this.props;
-    const jsonFeedAPI = 'https://api.rss2json.com/v1/api.json?rss_url=';
-    fetch(jsonFeedAPI + activeFeed)
-    .then(res => res.json())
-    .then(res => checkStatus(res))
-    .then(res => (
-      this.setState({
-        loading: false,
-        items: res.items,
-      })
-    ))
-    .catch(err => (
-      this.setState({
-        loading: false,
-        error: err.response.message,
-      })
-    ))
-  }
-  render() {
-    const { loading, items, error, } = this.state;
-    if (loading) {
-      return <Loading />
-    }
-    if (error) {
-      return <ErrorMessage message={ error } />
-    }
-    console.log(items)
-    return <ItemsList items={ items } />;
-  }
-}
-
-
-function ItemsList({ items, }) {
-  const Items = (listItems) => (
-    <React.Fragment>
-      { 
-        listItems.map(item => {
-          const { guid, pubDate, title, content, } = item;
-          return (
-            <li key={ guid }>
-              <div>
-                <h3> { `${title} - ${pubDate}`} </h3>
-                <p  dangerouslySetInnerHTML={{__html: content }}/>
-              </div>
-            </li>    
-          )
-        })
-      }
-    </React.Fragment>
-  )
-
-  return (
-    <ul className="feedItemsList">
-      { Items(items) }
-    </ul>
-  )
-}
 
 function SideBar({ feedsList, addFeed, removeFeed, }) {
   const RSSInputFormWithHistory = withRouter(RSSInputForm);
@@ -145,8 +21,13 @@ function SideBar({ feedsList, addFeed, removeFeed, }) {
   );
 }
 
+SideBar.propTypes = {
+  feedsList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addFeed: PropTypes.func.isRequired,
+  removeFeed: PropTypes.func.isRequired,
+}
+
 function MainScreen({ activeFeed }) {
-  // const { activeFeed, } = match.params;
   return (
     <React.Fragment>
       <div className="main__headerContainer">
@@ -159,15 +40,9 @@ function MainScreen({ activeFeed }) {
   );
 }
 
-function ErrorMessage({ message, }) {
-  return (
-      <div className="main__errorMessageContainer">
-        <h1> {message} </h1>
-      </div>
-  );
+MainScreen.propTypes = {
+  activeFeed: PropTypes.string.isRequired,
 }
-
-
 
 export function AppFrame({ feedsList, addFeed, removeFeed, }) {
   console.log(feedsList)
@@ -177,11 +52,11 @@ export function AppFrame({ feedsList, addFeed, removeFeed, }) {
       <SideBar { ...sidebarProps } />
       <div className="main">
         <Switch>
-          {feedsList.map((feed) => (
+          {feedsList.map((RSSFeedURL) => (
             <Route 
-              key={feed} 
-              path={`/${feed}`} 
-              render={() => <MainScreen activeFeed={feed} /> } 
+              key={RSSFeedURL} 
+              path={`/${RSSFeedURL}`} 
+              render={() => <MainScreen activeFeed={RSSFeedURL} /> } 
             />
           ))}
           <Route path="/:illegalRoute" render={() => (
@@ -191,4 +66,10 @@ export function AppFrame({ feedsList, addFeed, removeFeed, }) {
       </div>
     </div>
   );  
+}
+
+AppFrame.propTypes = {
+  feedsList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addFeed: PropTypes.func.isRequired,
+  removeFeed: PropTypes.func.isRequired,
 }

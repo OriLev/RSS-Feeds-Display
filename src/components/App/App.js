@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, } from 'react-router-dom';
 import './App.css';
-import { AppFrame, } from './components/AppFrame/AppFrame';
+import { AppFrame, } from '../AppFrame/AppFrame';
 
-class App extends Component {
-  static get defaultProps() {
-    const savedState = JSON.parse(window.localStorage.getItem('appState'));
-    if (!savedState) {
-      return { feedsList: [], };
-    }
-    const { feedsList, } = savedState;
-    return { feedsList, };
-  }
-
+export class App extends Component {
   constructor(props) {
     super(props);
+    const { feedsList, } = JSON.parse(window.localStorage.getItem('appState'));
     this.state = {
-      feedsList: props.feedsList,
+      feedsList: feedsList || [],
     }
 
     this.removeFeed = this.removeFeed.bind(this);
@@ -43,6 +35,7 @@ class App extends Component {
   }
   render() {
     const { feedsList, } = this.state;
+    console.log(this.state)
     const { addFeed, removeFeed, } = this;
     const appFrameProps = { feedsList, addFeed, removeFeed, }
     return (
@@ -57,5 +50,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

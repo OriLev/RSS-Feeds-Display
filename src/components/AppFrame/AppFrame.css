@@ -14,6 +14,9 @@
 
 .sidebar__RSSInputContainer{
   height: 15%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .sidebar__RSSListContainer {
@@ -25,6 +28,8 @@
   width: 75%;
   display: flex;
   flex-direction: column;
+  /*justify-content: space-around;*/
+  /*align-items: flex-start;*/
 }
 
 .main__headerContainer {
@@ -42,18 +47,4 @@
   justify-content: space-around;
 }
 
-.main__errorMessageContainer {
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: space-around;
-  align-items:  center;
-}
 
-.activeLink {
-  color: red;
-}
-
-.feedItemsList {
-  list-style: none;
-}
