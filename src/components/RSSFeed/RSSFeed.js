@@ -72,7 +72,7 @@ export class RSSFeed extends Component {
     .catch(err => (
       this.setState({
         loading: false,
-        error: 'error: ' + err.response.message,
+        error: 'error: ' + ( err.message || err.response.message ),
       })
     ))
   }
