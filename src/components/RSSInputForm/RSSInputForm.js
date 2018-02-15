@@ -31,7 +31,8 @@ export class RSSInputForm extends Component {
     return (
       <form className="inputForm" onSubmit={ handleSubmit }>
         <input 
-          className="inputForm__input" 
+          className="inputForm__input"
+          required
           type="url" 
           value={ newFeed } 
           onChange={ handleChange } 
