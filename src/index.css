@@ -9,3 +9,9 @@
 body {
   font-family: sans-serif;
 }
+
+@media (max-width: 768px) {
+  body {
+    font-size: 70%;
+  }
+}

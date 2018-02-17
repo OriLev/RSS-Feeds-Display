@@ -15,7 +15,7 @@
 .loadingContainer>h1 {
   font-family: cursive;
   position: relative;
-  font-size: 100px;
+  font-size: 6em;
   color: var(--text-color);
   font-weight: normal;
   line-height: 1;
