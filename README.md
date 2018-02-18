@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 The reason I chose to use Create React App is the fact that it provides a lot of options (i.e testing, linting) right out of the box. If ever there will be a need to override the initial configuration, it's fairly simple to eject the project and change the configuration manually.
 
-Plus, it comes with a detailed description regarding project build, as well as other documentation regarding Create React App.
+Plus, it comes with a detailed description regarding project build ([Available Scripts](#available-scripts)), as well as other documentation regarding Create React App.
 
 The one thing missing is regarding installation. After cloning the project locally, run `npm install` in your terminal. Once all the dependencies are installed it will be possible to run in the terminal `npm start` and see the project on `localhost:3000` in your browser.
 
