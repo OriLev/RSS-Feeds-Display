@@ -39,7 +39,7 @@ export class RSSInputForm extends Component {
           placeholder="What URL should I check?"
         />
         <button className="inputForm__submitButton" type="submit" >
-          <i className="fas fa-search fa-2x"></i>
+          <i className="fas fa-search"></i>
         </button>
       </form>
     );
