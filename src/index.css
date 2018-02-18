@@ -14,4 +14,8 @@ body {
   body {
     font-size: 70%;
   }
+
+  input::placeholder {
+    font-size: 70%;
+  }
 }
