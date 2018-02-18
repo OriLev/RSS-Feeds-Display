@@ -55,6 +55,7 @@ export function AppFrame({ feedsList, addFeed, removeFeed, }) {
           {feedsList.map((RSSFeedURL) => (
             <Route 
               key={RSSFeedURL} 
+              exact
               path={`/${RSSFeedURL}`} 
               render={() => <MainScreen activeFeed={RSSFeedURL} /> } 
             />

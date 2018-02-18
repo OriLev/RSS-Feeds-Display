@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, } from 'react-router-dom'
+import { NavLink, } from 'react-router-dom';
+import { ItemsList, } from '../ItemsList/ItemsList';
 import './RSSFeedsList.css';
 
 function RSSFeedLink({ feedURL, removeFeed, }) {
   return (
-    <li className="feedsList__container">
-      <NavLink to={`/${feedURL}`} className="link" activeClassName="link--active">
-        {feedURL}
+    <div className="feedLinkBox">
+      <NavLink to={`/${feedURL}`} className="feedLinkBox__NavLink" activeClassName="feedLinkBox__NavLink--active">
+        { feedURL }
       </NavLink>
-      <span className="removeLinkButton" onClick={ removeFeed }>
+      <span className="feedLinkBox__removeLinkButton" onClick={ removeFeed }>
         <i className="fas fa-times"></i>
-      </span> 
-    </li>
+      </span>
+    </div>
   )
 }
 
@@ -21,13 +22,13 @@ RSSFeedLink.propTypes = {
   removeFeed: PropTypes.func.isRequired,
 }
 
+
 export function RSSFeedsList({ feedsList, removeFeed, }) {
+  const FeedLinks = feedsList.map((feedURL, index) => (
+    <RSSFeedLink feedURL={ feedURL } removeFeed={ () => removeFeed(index) } />
+  ))
   return (
-    <ul className="feedsList">
-      {feedsList.map((feedURL, index) => (
-        <RSSFeedLink key={ feedURL } feedURL={ feedURL } removeFeed={ () => removeFeed(index) } />
-      ))}
-    </ul>
+    <ItemsList type="oneSize" items={ FeedLinks } keys = { feedsList } />
   );
 }
 

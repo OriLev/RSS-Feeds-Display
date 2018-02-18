@@ -2,17 +2,16 @@ import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { Loading, } from '../Loading/Loading';
 import { ErrorMessage, } from '../ErrorMessage/ErrorMessage';
+import { ItemsList, } from '../ItemsList/ItemsList';
 import './RSSFeed.css';
 
 function Item({ pubDate, title, content, }) {
   return (
-    <li className="feedItemsList__item">
-      <div>
-        <h5> <i> {pubDate} </i></h5>
-        <h3> { title } </h3>
-        <p  className="feedItemsList__item__content" dangerouslySetInnerHTML={{__html: content }}/>
-      </div>
-    </li>
+    <div className="itemBox">
+      <h5 className="itemBox__date"> {pubDate} </h5>
+      <h3> { title } </h3>
+      <p  className="itemBox__content" dangerouslySetInnerHTML={{__html: content }}/>
+    </div>
   )
 }
 
@@ -20,22 +19,6 @@ Item.propTypes = {
   pubDate: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-}
-
-function ItemsList({ items, }) {
-  return (
-    <ul className="feedItemsList">
-      { items.map(item => {
-          const { guid, pubDate, title, content, } = item;
-          const itemProps = { key: guid, pubDate, title, content, };
-          return <Item { ...itemProps } />
-      })}
-    </ul>
-  )
-}
-
-ItemsList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export class RSSFeed extends Component {
@@ -53,7 +36,7 @@ export class RSSFeed extends Component {
       if (response.status === "ok") {
         return response
       } else {
-        var error = new Error(response.statusText)
+        const error = new Error(response.statusText)
         error.response = response
         throw error
       }
@@ -72,7 +55,7 @@ export class RSSFeed extends Component {
     .catch(err => (
       this.setState({
         loading: false,
-        error: 'error: ' + err.response.message,
+        error: 'error: ' + ( err.message || err.response.message ),
       })
     ))
   }
@@ -84,7 +67,13 @@ export class RSSFeed extends Component {
     if (error) {
       return <ErrorMessage message={ error } />
     }
-    return <ItemsList items={ items } />;
+    const FeedItems = items.map(item => {
+      const { pubDate, title, content, } = item;
+      const itemProps = { pubDate, title, content, };
+      return <Item { ...itemProps } />
+    })
+    const keys = items.map(item => item.guid);
+    return <ItemsList type="autoSize" items={ FeedItems } keys={ keys } />;
   }
 }
 
