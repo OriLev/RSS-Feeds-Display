@@ -22,7 +22,7 @@
 
 .sidebar__RSSListContainer {
   height: 85%;
-  overflow-y: scroll;
+  overflow-y: auto;
   background: rgba(226,226,226,1);
   background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(254,254,254,1) 100%);
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226,226,226,1)), color-stop(100%, rgba(254,254,254,1)));
