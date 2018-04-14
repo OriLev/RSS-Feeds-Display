@@ -6,9 +6,14 @@ import { AppFrame, } from '../AppFrame/AppFrame';
 export class App extends Component {
   constructor(props) {
     super(props);
-    const { feedsList, } = JSON.parse(window.localStorage.getItem('appState'));
+    const savedState = window.localStorage.getItem('appState');
+    let feedsList = ['http://www.feedforall.com/sample-feed.xml', 'http://feeds.reuters.com/news/artsculture'];
+    if (savedState) {
+      feedsList = JSON.parse(savedState).feedsList;
+    }
+    
     this.state = {
-      feedsList: feedsList || [],
+      feedsList: feedsList,
     }
 
     this.removeFeed = this.removeFeed.bind(this);
