@@ -44,7 +44,7 @@ export class App extends Component {
     const { addFeed, removeFeed, } = this;
     const appFrameProps = { feedsList, addFeed, removeFeed, }
     return (
-      <BrowserRouter>
+      <BrowserRouter basename="/RSS-Feeds-Display">
         <Route
           path="/"
           render={() => {
