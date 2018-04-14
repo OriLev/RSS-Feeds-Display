@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, } from 'react-router-dom';
+import { HashRouter, Route, } from 'react-router-dom';
 import './App.css';
 import { AppFrame, } from '../AppFrame/AppFrame';
 
@@ -44,14 +44,14 @@ export class App extends Component {
     const { addFeed, removeFeed, } = this;
     const appFrameProps = { feedsList, addFeed, removeFeed, }
     return (
-      <BrowserRouter basename="/RSS-Feeds-Display">
+      <HashRouter>
         <Route
           path="/"
           render={() => {
             return <AppFrame { ...appFrameProps }/>
           }}
         />
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
