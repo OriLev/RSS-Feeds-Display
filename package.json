@@ -2,7 +2,7 @@
   "name": "rss-feed-task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://orilev.github.io/RSS-Feeds-List",
+  "homepage": "https://orilev.github.io/RSS-Feeds-Display",
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
